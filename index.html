@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Petal — a sweet little ledger</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,650;1,9..144,500&family=Nunito:wght@450;620;750&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✿</text></svg>" />
+  </head>
+  <body>
+    <div class="glow glow-a" aria-hidden="true"></div>
+    <div class="glow glow-b" aria-hidden="true"></div>
+
+    <main class="page">
+      <header class="top">
+        <div class="brand">
+          <span class="mark" aria-hidden="true">✿</span>
+          <div>
+            <h1>Petal</h1>
+            <p>a sweet little ledger</p>
+          </div>
+        </div>
+        <div class="month-nav" role="group" aria-label="Choose month">
+          <button type="button" id="prev-month" aria-label="Previous month">‹</button>
+          <h2 id="month-label">November 2026</h2>
+          <button type="button" id="next-month" aria-label="Next month">›</button>
+        </div>
+      </header>
+
+      <section class="hero">
+        <article class="card budget-card">
+          <div class="card-kicker">
+            <span>Monthly budget</span>
+            <label class="currency">
+              <span class="sr-only">Currency</span>
+              <select id="currency" aria-label="Currency">
+                <option value="₹">₹</option>
+                <option value="$">$</option>
+                <option value="€">€</option>
+                <option value="£">£</option>
+              </select>
+            </label>
+          </div>
+
+          <p class="remaining-label" id="remaining-label">Left to spend</p>
+          <p class="remaining" id="remaining">—</p>
+          <p class="whisper" id="budget-whisper">Set a number you feel good about.</p>
+
+          <div class="meter" id="meter" hidden>
+            <div class="meter-fill" id="meter-fill"></div>
+          </div>
+          <p class="meter-caption" id="meter-caption"></p>
+
+          <form id="budget-form" class="budget-form">
+            <label class="field">
+              <span>Budget for this month</span>
+              <input
+                id="budget-input"
+                type="number"
+                inputmode="decimal"
+                min="0"
+                step="0.01"
+                placeholder="0.00"
+                required
+              />
+            </label>
+            <button type="submit" class="btn btn-soft" id="budget-save">Save budget</button>
+          </form>
+
+          <dl class="stats">
+            <div>
+              <dt>Spent</dt>
+              <dd id="stat-spent">—</dd>
+            </div>
+            <div>
+              <dt>Budget</dt>
+              <dd id="stat-budget">—</dd>
+            </div>
+            <div>
+              <dt>Entries</dt>
+              <dd id="stat-count">0</dd>
+            </div>
+          </dl>
+        </article>
+
+        <article class="card add-card">
+          <div class="card-kicker">
+            <span>New spend</span>
+          </div>
+          <h3>What did you spend?</h3>
+          <form id="expense-form">
+            <label class="field amount-field">
+              <span>Amount</span>
+              <input
+                id="amount"
+                type="number"
+                inputmode="decimal"
+                min="0.01"
+                step="0.01"
+                placeholder="0.00"
+                required
+              />
+            </label>
+            <label class="field">
+              <span>Note</span>
+              <input id="note" type="text" maxlength="60" placeholder="morning coffee, a ribbon, the train…" />
+            </label>
+            <label class="field">
+              <span>Date</span>
+              <input id="date" type="date" required />
+            </label>
+            <fieldset class="cats">
+              <legend>Kind</legend>
+              <label><input type="radio" name="category" value="Food" checked /> Food</label>
+              <label><input type="radio" name="category" value="Treats" /> Treats</label>
+              <label><input type="radio" name="category" value="Home" /> Home</label>
+              <label><input type="radio" name="category" value="Out" /> Out</label>
+              <label><input type="radio" name="category" value="Other" /> Other</label>
+            </fieldset>
+            <button type="submit" class="btn btn-solid">Record spend</button>
+          </form>
+        </article>
+      </section>
+
+      <section class="card chart-card">
+        <div class="section-head">
+          <div>
+            <div class="card-kicker"><span>Daily rhythm</span></div>
+            <h3>Money spent, day by day</h3>
+          </div>
+          <p class="peak" id="peak-note"></p>
+        </div>
+        <div class="chart-scroll">
+          <div class="chart" id="chart" role="img" aria-label="Daily spending chart"></div>
+        </div>
+        <p class="day-filter" id="day-filter" hidden>
+          Showing <strong id="day-filter-label"></strong>
+          <button type="button" id="clear-day" class="text-btn">Show all days</button>
+        </p>
+      </section>
+
+      <section class="card list-card">
+        <div class="section-head">
+          <div>
+            <div class="card-kicker"><span>Kept</span></div>
+            <h3 id="list-title">This month</h3>
+          </div>
+        </div>
+        <ul class="expenses" id="expenses"></ul>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+    <script src="app.js"></script>
+  </body>
+</html>
